@@ -5,7 +5,7 @@ import statistics
 import matplotlib.pyplot as plt #visuals
 import seaborn as sns #visual
 
-# arr=np.array([1,2,3,4,5]);
+arr=np.array([1,2,3,4,5]);
 # sum=np.sum(arr) # sum
 # mean=sum/len(arr) # mean
 
@@ -46,8 +46,21 @@ print("Counts: ",dataSet["Height(cm)"].value_counts())
 
 print("Null Values", dataSet.isnull().sum())  # check for null values
 
-sns.histplot(x="Height(cm)",data=dataSet,bins=[i for i in range(140,200,5)])
-plt.plot([dataSet["Height(cm)"].mean() for i in range(0,10)],[i for i in range(0,10)],c="red", label="Mean")
-plt.plot([dataSet["Height(cm)"].median() for i in range(0,10)],[i for i in range(0,10)],c="blue", label="Median")
-plt.plot([dataSet["Height(cm)"].mode() for i in range(0,10)],[i for i in range(0,10)],c="purple" , label="Mode")
-plt.show()
+print("Range= ",dataSet["Height(cm)"].max()-dataSet["Height(cm)"].min())
+
+# sns.histplot(x="Height(cm)",data=dataSet,bins=[i for i in range(140,200,5)])
+# plt.plot([dataSet["Height(cm)"].mean() for i in range(0,10)],[i for i in range(0,10)],c="red", label="Mean")
+# plt.plot([dataSet["Height(cm)"].median() for i in range(0,10)],[i for i in range(0,10)],c="blue", label="Median")
+# plt.plot([dataSet["Height(cm)"].mode() for i in range(0,10)],[i for i in range(0,10)],c="purple" , label="Mode")
+# plt.show()
+
+
+#mean absoulte deviation
+
+print("Mean absoulte deviation ",np.sum(np.abs(arr-np.mean(dataSet["Height(cm)"])))/len(dataSet["Height(cm)"]) )
+print("Mean absoulte deviation ",np.sum(np.abs(arr-np.mean(dataSet["Weight(kg)"])))/len(dataSet["Weight(kg)"]) )
+print("STANDARD deviation ",np.std(dataSet["Height(cm)"]))
+print("Variances deviation ",np.std(dataSet["Height(cm)"])**2)
+print("Variances  ",np.var(dataSet["Height(cm)"])**2)
+
+print(dataSet.describe())
