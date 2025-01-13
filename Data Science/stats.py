@@ -64,3 +64,5 @@ print("Variances deviation ",np.std(dataSet["Height(cm)"])**2)
 print("Variances  ",np.var(dataSet["Height(cm)"])**2)
 
 print(dataSet.describe())
+
+print("percentile 50%",np.percentile(dataSet["Height(cm)"],50))
