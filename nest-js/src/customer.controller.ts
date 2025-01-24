@@ -1,53 +1,42 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post,Inject } from "@nestjs/common";
 
+import {CustomerService} from './customer.service';
 
-interface customer{
+export interface customer{
     id:string;
     name:string;
     age:number;
 }
-let CUSTOMERS:customer[]=[]
-
-
 @Controller('/customer')
 export class CustomerController {
 
+
+    constructor(private service:CustomerService){
+        
+    }
     @Get()
     getAllCustomers(){
-        return CUSTOMERS;
+        return this.service.getAllCustomers();
     }
 
     @Get('/:id')
     getCustomerById(@Param('id') id:string){
-        return CUSTOMERS.find((u:customer)=>u.id===id);
+        return this.service.getCustomerById(id);
     }
 
     @Post()
     addCustomer(@Body() body:customer){
-        CUSTOMERS.push(body);
-        return 'Customer added successfully';
+      return this.service.addCustomer(body);
     }
 
     @Patch('/:id')
     updateCustomer(@Param('id') param:string, @Body() body:customer){
-        const index = CUSTOMERS.findIndex((u:customer)=>u.id===param);
-        if(index!==-1){
-            CUSTOMERS[index]=body;
-            return 'Customer updated!';
-        }else {
-            return 'Customer not found';
-        }
+return this.service.updateCustomer(param,body);      
 
     }
     
     @Delete('/:id')
     deleteCustomer(@Param('id') id:string){
-        const index = CUSTOMERS.findIndex((u:customer)=>u.id===id);
-        if(index!==-1){
-            CUSTOMERS.splice(index,1);
-            return 'Customer deleted successfully';
-        }else {
-            return 'Customer not found';
-        }
+      return this.service.deleteCustomer(id);
     }
 }
