@@ -1,6 +1,6 @@
 import {  Injectable } from "@nestjs/common";
 export interface customer{
-    id:string;
+    id:number;
     name:string;
     age:number;
 }
@@ -15,7 +15,7 @@ export class CustomerService{
     }
 
   
-    getCustomerById(id:string){
+    getCustomerById(id:number){
         return CUSTOMERS.find((u:customer)=>u.id===id);
     }
 
@@ -25,7 +25,7 @@ export class CustomerService{
     }
 
    
-    updateCustomer(param:string, body:customer){
+    updateCustomer(param:number, body:customer){
         const index = CUSTOMERS.findIndex((u:customer)=>u.id===param);
         if(index!==-1){
             CUSTOMERS[index]=body;
@@ -36,7 +36,7 @@ export class CustomerService{
 
     }
     
-    deleteCustomer( id:string){
+    deleteCustomer( id:number){
         const index = CUSTOMERS.findIndex((u:customer)=>u.id===id);
         if(index!==-1){
             CUSTOMERS.splice(index,1);

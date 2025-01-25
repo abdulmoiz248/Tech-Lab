@@ -1,5 +1,5 @@
 import { Controller, Get, HttpCode, HttpStatus, Inject, Redirect, Req } from "@nestjs/common";
-import { UserStore } from "./user.store";
+import { UserStore } from "../providers/user.store";
 
 @Controller('/users')
 export class UsersController{

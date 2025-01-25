@@ -1,22 +1,14 @@
 import { Module } from '@nestjs/common';
-import { UsersController } from './users.controller';
-import { AdminController } from './admin.controller';
-import { CustomerController } from './customer.controller';
-import { UserStore } from './user.store';
-import { CustomerService } from './customer.service';
+import { UserModule } from './users/user.module';
+
+//@Global() =  har jagha withotu import kye use hojaye ga
+// if not global then dosre modules me import karna parega
+
 
 
 @Module({
-  imports: [],
-  controllers: [UsersController,AdminController,CustomerController], 
-  providers: [CustomerService,{provide:'store',useClass:UserStore}//,{provide: 'DB', useValue:"hahahahahahaha"}
-    ,{
-      provide:'something',
-      useFactory:(limit:number=2)=>{
-            return limit
-      },
-      inject:[{token:"DB",optional:true}]
-    }
-  ],
+  imports: [UserModule],
+  controllers: [], 
+  providers: [],
 })
 export class AppModule {}

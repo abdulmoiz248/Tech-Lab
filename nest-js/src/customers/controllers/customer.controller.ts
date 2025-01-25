@@ -1,12 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post,Inject } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UsePipes } from "@nestjs/common";
 
-import {CustomerService} from './customer.service';
+import {CustomerService} from '../providers/customer.service';
 
-export interface customer{
-    id:string;
-    name:string;
-    age:number;
-}
+import {customer} from '../providers/customer.service';
 @Controller('/customer')
 export class CustomerController {
 
@@ -20,7 +16,7 @@ export class CustomerController {
     }
 
     @Get('/:id')
-    getCustomerById(@Param('id') id:string){
+    getCustomerById(@Param('id',ParseIntPipe) id:number){
         return this.service.getCustomerById(id);
     }
 
@@ -30,13 +26,14 @@ export class CustomerController {
     }
 
     @Patch('/:id')
-    updateCustomer(@Param('id') param:string, @Body() body:customer){
+    updateCustomer(@Param('id',ParseIntPipe) param:number, @Body() body:customer){
 return this.service.updateCustomer(param,body);      
 
     }
     
     @Delete('/:id')
-    deleteCustomer(@Param('id') id:string){
+    @UsePipes(ParseIntPipe)
+    deleteCustomer(@Param('id') id:number){
       return this.service.deleteCustomer(id);
     }
 }
