@@ -4,6 +4,8 @@ import {CustomerService} from '../providers/customer.service';
 
 import {customer} from '../providers/customer.service';
 import { CAPITALIZEPipe } from "../pipes/capitalize.pipe";
+import { CustomerPipe } from "../pipes/customer.pipe";
+import { CustomerSchma } from "../pipes/customer.schema";
 @Controller('/customer')
 export class CustomerController {
 
@@ -22,7 +24,7 @@ export class CustomerController {
     }
 
     @Post()
-    addCustomer(@Body() body:customer){
+    addCustomer(@Body(new CustomerPipe(CustomerSchma)) body:customer){
       return this.service.addCustomer(body);
     }
 
