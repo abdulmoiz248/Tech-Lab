@@ -7,7 +7,7 @@ import { AdminModule } from './admin/admin.module';
 @Module({
   imports: [AdminModule],
   controllers: [UsersController], 
-  providers: [{provide:'store',useClass:UserStore}//,{provide: 'DB', useValue:"hahahahahahaha"}
+  providers: [UserStore,{provide:'store',useClass:UserStore}//,{provide: 'DB', useValue:"hahahahahahaha"}
     ,{
       provide:'something',
       useFactory:(limit:number=2)=>{

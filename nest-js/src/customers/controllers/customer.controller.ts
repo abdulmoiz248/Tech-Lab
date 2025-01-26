@@ -3,6 +3,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UsePip
 import {CustomerService} from '../providers/customer.service';
 
 import {customer} from '../providers/customer.service';
+import { CAPITALIZEPipe } from "../pipes/capitalize.pipe";
 @Controller('/customer')
 export class CustomerController {
 
@@ -35,5 +36,10 @@ return this.service.updateCustomer(param,body);
     @UsePipes(ParseIntPipe)
     deleteCustomer(@Param('id') id:number){
       return this.service.deleteCustomer(id);
+    }
+
+    @Get('/search/:name')
+    searchCustomer(@Param('name',CAPITALIZEPipe) name:string){
+        return name;
     }
 }
