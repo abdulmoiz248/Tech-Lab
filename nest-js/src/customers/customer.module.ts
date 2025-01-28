@@ -1,9 +1,9 @@
-import {OnModuleInit, Module ,OnModuleDestroy, NestModule, MiddlewareConsumer} from "@nestjs/common";
+import {OnModuleInit, Module ,OnModuleDestroy, NestModule, MiddlewareConsumer, RequestMethod} from "@nestjs/common";
 import { CustomerController } from "./controllers/customer.controller";
 import { CustomerService } from "./providers/customer.service";
 import { APP_PIPE } from "@nestjs/core";
 import { CAPITALIZEPipe } from "./pipes/capitalize.pipe";
-import { customerMiddleware } from "src/middlewares/customer.middleware";
+import { CustomerMiddleware } from "src/middlewares/customer.middleware";
 
 @Module({
     imports: [],
@@ -14,7 +14,9 @@ import { customerMiddleware } from "src/middlewares/customer.middleware";
 export class CustomersModule implements OnModuleInit,OnModuleDestroy,NestModule{
 
     configure(consumer: MiddlewareConsumer) {
-        consumer.apply(customerMiddleware).forRoutes('/customer')
+        consumer.apply(CustomerMiddleware).exclude({path:"/",method:RequestMethod.DELETE}).
+        forRoutes('/customer',{path:"/",method:RequestMethod.GET})
+       // consumer.apply(CustomerMiddleware).forRoutes('/customer',{path:"/",method:RequestMethod.GET})
     }
 
     onModuleInit(){
