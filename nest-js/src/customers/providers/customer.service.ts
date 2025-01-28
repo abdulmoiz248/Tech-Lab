@@ -1,4 +1,4 @@
-import {  Injectable } from "@nestjs/common";
+import {  OnModuleInit,Injectable } from "@nestjs/common";
 export interface customer{
     id:number;
     name:string;
@@ -7,7 +7,12 @@ export interface customer{
 export let CUSTOMERS:customer[]=[]
 
 @Injectable()
-export class CustomerService{
+export class CustomerService  implements OnModuleInit{
+
+
+    onModuleInit(){
+        console.log('Customer services Initialized');
+    }
     
     
     getAllCustomers(){
