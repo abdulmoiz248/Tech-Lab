@@ -1,9 +1,8 @@
-from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import FAISS, Qdrant, Chroma
 from qdrant_client import QdrantClient
-import os
+from langchain_community.document_loaders import DirectoryLoader
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import FAISS, Qdrant, Chroma
 
 # Load documents
 def loadDocs(path):
@@ -28,7 +27,7 @@ def getEmbeddingModel(modelName="sentence-transformers/all-MiniLM-L6-v2"):
     return HuggingFaceEmbeddings(model_name=modelName)
 
 # Save to FAISS
-def saveToFAISS(chunks, embeddingModel, indexPath="rag_index"):
+def saveToFAISS(chunks, embeddingModel, indexPath="/rag/rag_index"):
     store = FAISS.from_documents(chunks, embeddingModel)
     store.save_local(indexPath)
     return store
@@ -64,5 +63,7 @@ def main(docPath, backend="faiss"):
         print("Saved to Chroma ✅")
     else:
         raise ValueError("Unsupported backend. Choose from 'faiss', 'qdrant', or 'chroma'.")
+    
+main('rag/indexing')
 
 
