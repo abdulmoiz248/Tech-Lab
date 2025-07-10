@@ -34,15 +34,15 @@ def getRetriever(vectorstore, k=4):
     return vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": k})
 
 # RetrievalQA chain (Retriever + LLM)
-def runRetrievalQA(retriever, query):
-    llm = OpenAI(model_name="gpt-3.5-turbo")
-    qa_chain = RetrievalQA.from_chain_type(
-        llm=llm,
-        retriever=retriever,
-        return_source_documents=True
-    )
-    result = qa_chain.run(query)
-    print("\n[LLM Answer]\n", result)
+# def runRetrievalQA(retriever, query):
+#     llm = OpenAI(model_name="gpt-3.5-turbo")
+#     qa_chain = RetrievalQA.from_chain_type(
+#         llm=llm,
+#         retriever=retriever,
+#         return_source_documents=True
+#     )
+#     result = qa_chain.run(query)
+#     print("\n[LLM Answer]\n", result)
 
 # Hybrid Retrieval (BM25 + Vector)
 def hybridRetrieval(vectorstore, docs, query):
@@ -62,12 +62,12 @@ def retrievalWithScoreThreshold(vectorstore, embeddings, query, k=5, threshold=0
         print(f"\n[Above Threshold #{i+1}]\n{doc.page_content}")
 
 # Query rewriting
-def expandQuery(original_query):
-    prompt = PromptTemplate.from_template("Rewrite the following query to be more specific: {query}")
-    chain = LLMChain(llm=OpenAI(model_name="gpt-3.5-turbo"), prompt=prompt)
-    new_query = chain.run({"query": original_query})
-    print("\n[Expanded Query]:", new_query)
-    return new_query
+# def expandQuery(original_query):
+#     prompt = PromptTemplate.from_template("Rewrite the following query to be more specific: {query}")
+#     chain = LLMChain(llm=OpenAI(model_name="gpt-3.5-turbo"), prompt=prompt)
+#     new_query = chain.run({"query": original_query})
+#     print("\n[Expanded Query]:", new_query)
+#     return new_query
 
 # Custom similarity function (mocked cosine sim logic)
 def customSimilaritySearch(vectorstore, embeddings, query, k=3):
@@ -99,11 +99,11 @@ if __name__ == "__main__":
     for i, doc in enumerate(docs):
         print(f"\n[Retriever #{i+1}]\n{doc.page_content}")
 
-    print("\n--- RETRIEVAL QA WITH LLM ---")
-    runRetrievalQA(retriever, query)
+    # print("\n--- RETRIEVAL QA WITH LLM ---")
+    # runRetrievalQA(retriever, query)
 
-    print("\n--- QUERY EXPANSION ---")
-    expanded = expandQuery(query)
+    # print("\n--- QUERY EXPANSION ---")
+    # expanded = expandQuery(query)
 
     print("\n--- RETRIEVAL WITH THRESHOLD ---")
     retrievalWithScoreThreshold(vectorstore, embeddings, query)
